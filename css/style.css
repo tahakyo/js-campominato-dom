@@ -42,11 +42,11 @@ main {
     display: none;
 }
 
-.grid-item.active span {
-    display: block;
-}
 .grid-item.clicked {
     background-color: cornflowerblue;
+}
+.grid-item.bomb {
+    background-color: red;
 }
 
 /* Footer */
