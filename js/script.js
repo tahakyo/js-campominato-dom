@@ -63,8 +63,8 @@ function startGame() {
             // la cella diventa rossa
             this.classList.add('bomb');
             // stampare il numero di tentativi azzeccati (punteggio)
+            endGame(safeCellsArray.length, "lose");
             // fine del gioco
-            alert('hai perso')
         } else {
             // la cella diventa blue
             this.classList.add('clicked');
@@ -76,9 +76,27 @@ function startGame() {
             // se la lunghezza del safeCellsArray è uguale al winTries
             if (safeCellsArray.length >= WinTries) {
                 // fine del gioco 
-                alert('hai vinto');
+                endGame(safeCellsArray.length, "win");
             }
         }
+    }
+    /**
+     * Description: Stampa il messaggio (result) del fine del gioco
+     * @param {number} -> il numero di tentativi prima della fine del gioco
+     * @param {string} -> "win" se l'utente ha vinto "lose" se l'utente ha perso
+     */
+    function endGame(safeTriesQuantity, winOrLose) {
+        const resultTitle = document.getElementById('result');
+        let resultMessage = "";
+        // se l'utente ha perso stampa il messaggio result con i tentativi azzeccati
+        if (winOrLose === "lose") {
+            resultMessage = `Hai perso! Hai indovinato ${safeTriesQuantity} numeri`;
+        } else {
+            // altrimenti stampa il messaggio hai vinto
+            resultMessage = "Hai vinto!";
+        }
+        resultTitle.innerHTML = resultMessage;
+        resultTitle.classList.remove('hidden');
     }
 }
 
