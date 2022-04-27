@@ -3,8 +3,8 @@
 // Quando l'utente clicca su ogni cella, la cella cliccata si colora di azzurro.
 
 // consegna ++ 
-// Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe.
-// I numeri nella lista delle bombe non possono essere duplicati.
+// Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe. *
+// I numeri nella lista delle bombe non possono essere duplicati.*
 // In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina, altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
 // La partita termina quando il giocatore clicca su una bomba o raggiunge il numero massimo possibile di numeri consentiti.
 // Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
@@ -41,7 +41,9 @@ function startGame() {
     // generare 16 bombe: 16 numeri casulai compres tra 1 e cellNumber
         const bombsNumber = 16;
         const bombsArray = generateUniqueRndmNumbers (bombsNumber, cellNumber);
+        const safeCellsArray = [];
         console.log(bombsArray);
+        const WinTries = cellNumber - bombsNumber ;
 
     // generare le celle da 1 a 100
     for (let i = 1; i <= cellNumber; i++) {
@@ -52,12 +54,35 @@ function startGame() {
         grid.append(newItem);
 
     }
+    function cellClicked() {
+        // prelevare il numero della cliccata
+        console.log(this);
+        const clickedNumber = parseInt (this.querySelector("span").textContent);
+        // se il numero della cella è presente nell'array delle bombe
+        if (bombsArray.includes(clickedNumber)) {
+            // la cella diventa rossa
+            this.classList.add('bomb');
+            // stampare il numero di tentativi azzeccati (punteggio)
+            // fine del gioco
+            alert('hai perso')
+        } else {
+            // la cella diventa blue
+            this.classList.add('clicked');
+            // la cella safe non deve essere cliccata due volte
+            this.style.pointerEvents = "none";
+            // il numero della cella viene pushato dentro l'array safeCellsArray
+            safeCellsArray.push(clickedNumber);
+            console.log(safeCellsArray);
+            // se la lunghezza del safeCellsArray è uguale al winTries
+            if (safeCellsArray.length >= WinTries) {
+                // fine del gioco 
+                alert('hai vinto');
+            }
+        }
+    }
 }
 
 // creo una function che colora di blu la cella quando viene cliccata
-function cellClicked() {
-    this.classList.add("clicked");
-}
 
 // creare una function che genera gli items della grid
 function generateGridItem(gridNumber, cellsInRow) {
